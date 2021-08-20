@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // admin imports
-import { Admin, EditGuesser, Resource } from 'react-admin';
+import { Admin, EditGuesser, ListGuesser, Resource, ShowGuesser } from 'react-admin';
 import buildHasuraProvider from 'ra-data-hasura';
 
 // client import
@@ -29,7 +29,7 @@ const createApolloClient = () => {
         cache: new InMemoryCache(),
         headers: {
             //'Authorization': `Bearer ${token}`
-            'x-hasura-admin-secret': ''
+            'x-hasura-admin-secret': process.env.REACT_APP_HASURA_SECRET
         }
     })
 }
@@ -41,6 +41,11 @@ const App = () => {
         const buildDataProvider = async () => {
             const apolloClient = createApolloClient();
             let dataProvider = await buildHasuraProvider({
+                introspection: {
+                    operationNames: {
+                      ['UPDATE']: (resource) => `insert_${resource.name}_one`,
+                    },
+                },
                 client: apolloClient
             }, { buildFields: customBuildFields, buildArgs: customBuildQuery }, customBuildVariables);
             dataProvider = addUploadFeature(dataProvider);
@@ -58,11 +63,9 @@ const App = () => {
             history={history}
             loginPage={LoginPage}
         >
-            <Resource name="episode" list={EpisodeList} create={EpisodeCreate}></Resource>
-            <Resource name="season" list={SeasonList} edit={SeasonEdit} create={SeasonCreate}></Resource>
-            <Resource name="series" list={SeriesList} create={SeriesCreate} edit={SeriesEdit} show={SeriesShow} ></Resource>
-            <Resource name="localizablestring"></Resource>
-            <Resource name="localizedstring"></Resource>
+            <Resource name="media" list={SeriesList} create={SeriesCreate} edit={SeriesEdit} show={SeriesShow} ></Resource>
+            <Resource name="media_t"></Resource>
+            <Resource name="parents"></Resource>
         </Admin>
     )
 };

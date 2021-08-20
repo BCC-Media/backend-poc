@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 
-import {  useQueryWithStore, Loading, Error, List, Datagrid, TextField, BooleanField, Create, SimpleForm, TextInput, ReferenceField, NumberInput, DateTimeInput, NumberField, DateField, Edit, EditButton, ImageInput, ImageField, Show, SimpleShowLayout, RichTextField, ReferenceInput, FormDataConsumer, useDataProvider, useNotify, ReferenceManyField, ShowButton } from 'react-admin';
+import {  useQueryWithStore, Loading, Error, List, Datagrid, TextField, BooleanField, Create, SimpleForm, TextInput, ReferenceField, NumberInput, DateTimeInput, NumberField, DateField, Edit, EditButton, ImageInput, ImageField, Show, SimpleShowLayout, RichTextField, ReferenceInput, FormDataConsumer, useDataProvider, useNotify, ReferenceManyField, ShowButton, BooleanInput } from 'react-admin';
 import { StatusField, StatusInput } from '../components/StatusComponents';
 import RichTextInput from 'ra-input-rich-text';
 import { LocalizableStringQuickEdit } from './localizablestring';
@@ -18,6 +18,7 @@ export const SeriesList = (props) => {
 				<DateField source="published" />
 				<StatusField source="status" />
 				<ShowButton />
+				<EditButton/>
 			</Datagrid>
 		</List>
 	);
@@ -30,8 +31,8 @@ export const SeriesCreate = (props) => {
 				<ImageInput label="Enter image" source="image">
 					<ImageField source="image"/>
 				</ImageInput>
-				<TextInput label="Enter title (norwegian)" source="title.data.localizedstrings.data.value" />
-				<NumberInput style={{display:'none'}} initialValue="1" source="title.data.localizedstrings.data.languageid" />
+				<TextInput label="Enter title (norwegian)" source="translated_fields.title" />
+				<NumberInput style={{display:'none'}} initialValue="1" source="translated_fields.language" />
 				<RichTextInput label="Enter description (norwegian)" source="description.data.localizedstrings.data.value" />
 				<NumberInput style={{display:'none'}} initialValue="1" source="description.data.localizedstrings.data.languageid" />
 				<NumberInput label="Enter status" source="status" />
@@ -57,10 +58,11 @@ export const SeriesEdit = (props) => {
 		<Edit {...props}>
 			<SimpleEditFormWithLocalizations>
 				<ImageInput label="Enter image" source="image" />
-				<TextInput label="Enter title (norwegian)" source="title.localizedstrings[0].value" />
-				<RichTextInput label="Description" source="description.localizedstrings[0].value" />
-				<StatusInput label="Enter status" source="status" />
-				<DateTimeInput label="Enter publish date" source="published" />
+				<TextInput label="Enter title (norwegian)" source="translated_fields[0].title" />
+				<RichTextInput label="Description" source="translated_fields[0].description" />
+				<BooleanInput label="Draft" source="is_draft" />
+				<DateTimeInput label="Available from" source="available_from" />
+				<DateTimeInput label="Available to" source="available_to" />
 			</SimpleEditFormWithLocalizations>
 		</Edit>
 	)
