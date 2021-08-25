@@ -10,11 +10,17 @@ const extractFieldsFromQuery = (queryAst) => {
 };
 
 // Define the additional fields that we want.
-const GET_TRANSLATIONS = gql`
+const GET_DESCRIPTION = gql`
+    {
+        translated_fields {
+            description
+        }
+    }
+`;
+const GET_TITLE = gql`
     {
         translated_fields {
             title
-            description
         }
     }
 `;
@@ -24,9 +30,11 @@ export const customBuildFields = (type, requestType) => {
 
     console.log("customBuildFields", requestType, type);
     if (['media'].includes(type.name)/*  && ['GET_ONE', 'GET_LIST', 'UPDATE'].includes(requestType) */) {
-        console.log(fields);
-        fields.push(...extractFieldsFromQuery(GET_TRANSLATIONS));
-        console.log(fields);
+        fields.push(...extractFieldsFromQuery(GET_TITLE));
+        fields.push(...extractFieldsFromQuery(GET_DESCRIPTION));
+    }
+    if (['categories'].includes(type.name)/*  && ['GET_ONE', 'GET_LIST', 'UPDATE'].includes(requestType) */) {
+        fields.push(...extractFieldsFromQuery(GET_TITLE));
     }
     
     return fields;

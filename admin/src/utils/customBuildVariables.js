@@ -32,6 +32,7 @@ const GET_DESCRIPTION = gql`
 `;
 
 export const customBuildVariables = (introspectionResults) => {
+    console.log(introspectionResults);
     const vars = buildVariables(introspectionResults);    
     return (
         resource,

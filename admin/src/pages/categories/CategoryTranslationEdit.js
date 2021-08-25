@@ -16,22 +16,21 @@ import {
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
-function MediaTranslationEdit({ onChange }) {
-    const [update, { }] = useUpdate('media_t');
+export const CategoryTranslationEdit = ({ onChange }) => {
+    const [update, { }] = useUpdate('category_t');
     const notify = useNotify();
     const form = useForm();
     var parentFormValues = form.getState().values;
     console.log("parentFormValues", parentFormValues)
-    var mediaPK = parseId(parentFormValues.id);
+    var parentPK = parseId(parentFormValues.id);
     var primaryKey = {
-        media_id: mediaPK.id,
-        media_type: mediaPK.type,
+        id: parentPK.id,
         language_id: 1
     };
 
     const initialLoad = useQuery({
         type: 'getOne',
-        resource: 'media_t',
+        resource: 'category_t',
         payload: { id: createId(primaryKey) }
     });
     console.log(initialLoad.data)
@@ -73,12 +72,6 @@ function MediaTranslationEdit({ onChange }) {
                             validate={required()}
                             fullWidth
                         />
-                        <RichTextInput
-                            source="description"
-                            label="Description (norwegian)"
-                            validate={required()}
-                            fullWidth
-                        />
                         <SaveButton
                             handleSubmitWithRedirect={handleSubmitWithRedirect}
                             pristine={pristine}
@@ -91,5 +84,3 @@ function MediaTranslationEdit({ onChange }) {
         </>
     );
 }
-
-export default MediaTranslationEdit;

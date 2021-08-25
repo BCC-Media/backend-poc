@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Route } from 'react-router-dom';
 
 // admin imports
 import { Admin, EditGuesser, ListGuesser, Resource, ShowGuesser } from 'react-admin';
@@ -16,11 +17,13 @@ import { EpisodeList, EpisodeCreate } from './pages/episodes';
 
 // browser history
 import { createBrowserHistory as createHistory } from 'history';
-import { SeriesCreate, SeriesEdit, SeriesList, SeriesShow } from './pages/series';
+import { MediaCreate, MediaEdit, MediaListWithFilter, MediaShow } from './pages/media';
 import { SeasonCreate, SeasonEdit, SeasonList } from './pages/seasons';
 import { customBuildFields } from './utils/customBuildFields';
 import { customBuildVariables, customBuildQuery } from './utils/customBuildVariables';
 import addUploadFeature from './utils/uploadFeature';
+import { Menu } from './components/menu';
+import { CategoryCreate, CategoryEdit, CategoryList } from './pages/categories/categories';
 const history = createHistory();
 
 const createApolloClient = () => {
@@ -42,8 +45,8 @@ const App = () => {
             const apolloClient = createApolloClient();
             let dataProvider = await buildHasuraProvider({
                 introspection: {
-                    operationNames: {
-                      ['UPDATE']: (resource) => `insert_${resource.name}_one`,
+                    operationNames: {/* 
+                      ['UPDATE']: (resource) => `insert_${resource.name}_one`, */
                     },
                 },
                 client: apolloClient
@@ -59,13 +62,20 @@ const App = () => {
         <Admin 
             dataProvider={dataProvider} 
             title="Hasura Dashboard"
-            dashboard={Dashboard}
+            menu={Menu}
+            customRoutes={[
+                <Route exact path="/shows" component={MediaListWithFilter({ type: 'show' })} />,
+                <Route exact path="/seasons" component={MediaListWithFilter({ type: 'season' })} />,
+                <Route exact path="/episodes" component={MediaListWithFilter({ type: 'episode' })} />,
+                <Route exact path="/standalones" component={MediaListWithFilter({ type: 'standalone' })} />
+            ]}
             history={history}
             loginPage={LoginPage}
         >
-            <Resource name="media" list={SeriesList} create={SeriesCreate} edit={SeriesEdit} show={SeriesShow} ></Resource>
+            <Resource name="media" list={MediaListWithFilter()} create={MediaCreate} edit={MediaEdit} show={MediaShow} ></Resource>
             <Resource name="media_t"></Resource>
-            <Resource name="parents"></Resource>
+            <Resource name="categories" list={CategoryList} create={CategoryCreate} edit={CategoryEdit}></Resource>
+            <Resource name="category_t"></Resource>
         </Admin>
     )
 };
