@@ -12,5 +12,6 @@ export const Menu = () => (
         <MenuItemLink to="/seasons" primaryText="Seasons" leftIcon={<BookIcon />}/>
         <MenuItemLink to="/episodes" primaryText="Episodes" leftIcon={<BookIcon />}/>
         <MenuItemLink to="/categories" primaryText="Categories" leftIcon={<BookIcon />}/>
+        <MenuItemLink to="/videos" primaryText="Videos" leftIcon={<BookIcon />}/>
     </div>
 );

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-final-form';
-import { parseId, createId } from 'ra-data-hasura';
 import {
     required,
     Button,
@@ -22,17 +21,16 @@ function MediaTranslationEdit({ onChange }) {
     const form = useForm();
     var parentFormValues = form.getState().values;
     console.log("parentFormValues", parentFormValues)
-    var mediaPK = parseId(parentFormValues.id);
-    var primaryKey = {
-        media_id: mediaPK.id,
-        media_type: mediaPK.type,
-        language_id: 1
-    };
 
     const initialLoad = useQuery({
-        type: 'getOne',
+        type: 'getList',
         resource: 'media_t',
-        payload: { id: createId(primaryKey) }
+        payload: { 
+            filter: {
+                media_id: parentFormValues.id,
+                'language#code@_eq': 'no'
+            } 
+        }
     });
     console.log(initialLoad.data)
     if (initialLoad.loading) return <Loading />;
@@ -42,7 +40,7 @@ function MediaTranslationEdit({ onChange }) {
 
     const handleSubmit = async values => {
         update(
-            { payload: { data: values } },
+            { payload: { id: initialLoad.data[0].id, data: values } },
             {
                 onSuccess: ({ data }) => {
                     console.log(data)
@@ -58,7 +56,7 @@ function MediaTranslationEdit({ onChange }) {
     return (
         <>
             <FormWithRedirect
-                initialValues={initialLoad.data}
+                initialValues={initialLoad.data[0]}
                 resource="media_t"
                 save={handleSubmit}
                 render={({

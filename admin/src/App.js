@@ -24,6 +24,8 @@ import { customBuildVariables, customBuildQuery } from './utils/customBuildVaria
 import addUploadFeature from './utils/uploadFeature';
 import { Menu } from './components/menu';
 import { CategoryCreate, CategoryEdit, CategoryList } from './pages/categories/categories';
+import { VideoCreate, VideoEdit, VideoList } from './pages/videos/videos';
+import { QueryCreate, QueryEdit, QueryList } from './pages/queries';
 const history = createHistory();
 
 const createApolloClient = () => {
@@ -76,6 +78,9 @@ const App = () => {
             <Resource name="media_t"></Resource>
             <Resource name="categories" list={CategoryList} create={CategoryCreate} edit={CategoryEdit}></Resource>
             <Resource name="category_t"></Resource>
+            <Resource name="category_media"></Resource>
+            <Resource name="videos" create={VideoCreate} list={VideoList}></Resource>
+            <Resource name="queries" create={QueryCreate} list={QueryList} edit={QueryEdit}></Resource>
         </Admin>
     )
 };

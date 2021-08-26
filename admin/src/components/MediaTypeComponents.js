@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SelectField, SelectInput } from "react-admin";
+import { SelectField, SelectInput, TextField } from "react-admin";
 
 const MediaTypes = [
     {id: 'show', name: 'Show'},
@@ -10,4 +10,3 @@ const MediaTypes = [
 ];
 
 export const MediaTypeInput = (props) => <SelectInput {...props} choices={MediaTypes}/>;
-export const MediaTypeField = (props) => <SelectField {...props} choices={MediaTypes}/>;

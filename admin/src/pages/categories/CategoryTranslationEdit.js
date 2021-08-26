@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-final-form';
-import { parseId, createId } from 'ra-data-hasura';
 import {
     required,
     Button,
@@ -22,16 +21,10 @@ export const CategoryTranslationEdit = ({ onChange }) => {
     const form = useForm();
     var parentFormValues = form.getState().values;
     console.log("parentFormValues", parentFormValues)
-    var parentPK = parseId(parentFormValues.id);
-    var primaryKey = {
-        id: parentPK.id,
-        language_id: 1
-    };
-
     const initialLoad = useQuery({
         type: 'getOne',
         resource: 'category_t',
-        payload: { id: createId(primaryKey) }
+        payload: { id: parentFormValues.id }
     });
     console.log(initialLoad.data)
     if (initialLoad.loading) return <Loading />;

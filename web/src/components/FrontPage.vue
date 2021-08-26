@@ -1,14 +1,35 @@
 <template>
   <div>
-    <h1 class="text-2xl">BrunstadTV</h1>
     <div class="mt-2">
-      <div v-if="!loading">
+      <div v-if="!mediaLoading && mediaResult != null">
         <h2>Newest episodes</h2>
         <div class="flex -mx-2">
-          <a href="#" class="mx-2 hover:text-gray-700" v-for="i in result.media" :key="i.id">
-            <img class="h-auto w-48" src="https://brunstad.tv/static/images/placeholder.jpg"/>
-            <span class="">{{ i.translated_fields[0].title }}</span>
+          <a href="#" class="mx-2 hover:text-gray-700 shadow w-48 overflow-hidden" v-for="i in mediaResult.media" :key="i.id">
+            <img class="h-auto" src="https://brunstad.tv/static/images/placeholder.jpg"/>
+            <div class="p-4">
+              <span class="">{{ i.translated_fields[0].title }}</span>
+              <div v-html="i.translated_fields[0].description"/>
+            </div>
           </a>
+        </div>
+      </div>
+      <div v-if="!pageLoading && pageResult != null">
+        <div v-for="(section, index) in pageResult.sections" :key="index">
+          <h2>{{section.display_contract}}</h2>
+          <div class="flex -mx-2" >
+            <router-link
+            :to="'/media/'+item.id"
+            v-for="item in section.items"
+            :key="item.id"
+            class="mx-2 hover:text-gray-700 shadow w-48 overflow-hidden">
+              <img class="h-auto" src="https://brunstad.tv/static/images/placeholder.jpg"/>
+              <div class="p-4">
+                <span class="">{{ item.translated_fields[0].title }}</span>
+                <div v-html="item.translated_fields[0].description"/>
+                <div v-html="item.video?.filename"/>
+              </div>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -25,13 +46,32 @@ defineProps({
   msg: String
 })
 
-const { result, loading } = useQuery(gql`
+const { result: mediaResult, loading: mediaLoading } = useQuery(gql`
     query media {
       media {
         id
         type,
         translated_fields {
           title
+        }
+      }
+    }
+`)
+
+const { result: pageResult, loading: pageLoading } = useQuery(gql`
+    query page {
+      sections:page_sections {
+        display_contract
+        items {
+          id
+          translated_fields {
+            description
+            longdescription
+            title
+          }
+          video {
+            filename
+          }
         }
       }
     }

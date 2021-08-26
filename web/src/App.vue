@@ -1,6 +1,7 @@
 <template>
   <div class="h-screen p-24">
-    <FrontPage />
+    <h1 class="text-2xl"><router-link to="/">BrunstadTV</router-link></h1>
+    <router-view/>
   </div>
 </template>
 

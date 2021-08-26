@@ -3,6 +3,7 @@ import { DefaultApolloClient } from '@vue/apollo-composable'
 import App from './App.vue'
 import './index.css'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
+import router from "./router/index"
 
 const cache = new InMemoryCache()
 
@@ -19,4 +20,6 @@ createApp({
       provide(DefaultApolloClient, apolloClient)
     },
     render: () => h(App)
-}).mount('#app')
+})
+.use(router)
+.mount('#app')
