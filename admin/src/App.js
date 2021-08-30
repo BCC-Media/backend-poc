@@ -13,12 +13,10 @@ import Dashboard from './components/Dashboard';
 
 // pages
 import LoginPage from './pages/login.js';
-import { EpisodeList, EpisodeCreate } from './pages/episodes';
 
 // browser history
 import { createBrowserHistory as createHistory } from 'history';
 import { MediaCreate, MediaEdit, MediaListWithFilter, MediaShow } from './pages/media';
-import { SeasonCreate, SeasonEdit, SeasonList } from './pages/seasons';
 import { customBuildFields } from './utils/customBuildFields';
 import { customBuildVariables, customBuildQuery } from './utils/customBuildVariables';
 import addUploadFeature from './utils/uploadFeature';

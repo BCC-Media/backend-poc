@@ -3,13 +3,9 @@ import React, { useCallback, useRef } from 'react';
 import {  useQueryWithStore, Loading, Error, List, Datagrid, TextField, BooleanField, Create, SimpleForm, TextInput, ReferenceField, NumberInput, DateTimeInput, NumberField, DateField, Edit, EditButton, ImageInput, ImageField, Show, SimpleShowLayout, RichTextField, ReferenceInput, FormDataConsumer, useDataProvider, useNotify, ReferenceManyField, ShowButton, BooleanInput, TabbedForm, FormWithRedirect, SaveButton, Toolbar, DeleteButton, DeleteWithUndoButton, FunctionField, DataProviderContext, ArrayInput, SelectArrayInput, ReferenceArrayInput, SelectInput } from 'react-admin';
 import { StatusField, StatusInput } from '../components/StatusComponents';
 import RichTextInput from 'ra-input-rich-text';
-import { LocalizableStringQuickEdit } from './localizablestring';
-import { useMutation } from '@apollo/client';
-import { SimpleEditFormWithLocalizations } from '../components/SimpleEditFormWithLocalizations';
 import MediaTranslationEdit from './media/MediaTranslationEdit';
-import { Box, FormGroup } from '@material-ui/core';
-import { MediaTypeField, MediaTypeInput } from '../components/MediaTypeComponents';
-import { createId } from 'ra-data-hasura';
+import { Box } from '@material-ui/core';
+import { MediaTypeInput } from '../components/MediaTypeComponents';
 
 export const MediaListWithFilter = (filter) => (props) => {
 	return (
