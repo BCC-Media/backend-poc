@@ -1,6 +1,33 @@
-actions: []
+actions:
+- name: page_sections1
+  definition:
+    kind: ""
+    handler: https://sapphire-balanced-camp.glitch.me/page
+    timeout: 10
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+  - name: Page
+  - name: PageActionResult
+    relationships:
+    - remote_table:
+        schema: public
+        name: sections
+      name: section
+      source: default
+      type: array
+      field_mapping:
+        section_id: id
+  - name: PageSection
+    relationships:
+    - remote_table:
+        schema: public
+        name: sections
+      name: details
+      source: default
+      type: array
+      field_mapping:
+        section_id: id
+  - name: PageSection2
   scalars: []

@@ -1,0 +1,42 @@
+table:
+  name: media
+  schema: public
+object_relationships:
+- name: main_parent
+  using:
+    manual_configuration:
+      column_mapping:
+        parent_id: id
+        parent_type: type
+      insertion_order: null
+      remote_table:
+        name: media
+        schema: public
+- name: video
+  using:
+    foreign_key_constraint_on: video_id
+array_relationships:
+- name: categories
+  using:
+    foreign_key_constraint_on:
+      column: media_id
+      table:
+        name: category_media
+        schema: public
+- name: translated_fields
+  using:
+    foreign_key_constraint_on:
+      column: media_id
+      table:
+        name: media_t
+        schema: public
+remote_relationships:
+- definition:
+    hasura_fields:
+    - video_id
+    remote_field:
+      get_video_urls:
+        arguments:
+          video_id: $video_id
+    remote_schema: sample
+  name: video_urls

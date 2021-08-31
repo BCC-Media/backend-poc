@@ -1,0 +1,11 @@
+table:
+  name: videos
+  schema: public
+array_relationships:
+- name: urls
+  using:
+    foreign_key_constraint_on:
+      column: video_id
+      table:
+        name: video_urls
+        schema: public

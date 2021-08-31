@@ -1,0 +1,9 @@
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: GET Categories
+  url: categories
+  methods:
+  - GET
+  name: GET Categories
+  comment: null

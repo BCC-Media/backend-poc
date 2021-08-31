@@ -1,0 +1,7 @@
+table:
+  name: video_urls
+  schema: public
+object_relationships:
+- name: video
+  using:
+    foreign_key_constraint_on: video_id

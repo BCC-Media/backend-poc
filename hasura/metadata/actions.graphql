@@ -1,0 +1,26 @@
+type Query {
+  page_sections1 (
+    code: String!
+  ): [PageSection2]
+}
+
+type Page {
+  code : String
+  section_ids : [Int]
+}
+
+type PageActionResult {
+  page_code : String!
+  section_id : Int!
+}
+
+type PageSection {
+  page_code : String!
+  section_id : Int!
+}
+
+type PageSection2 {
+  page_code : String!
+  section_id : Int!
+}
+

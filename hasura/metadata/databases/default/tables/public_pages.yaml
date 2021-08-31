@@ -1,0 +1,13 @@
+table:
+  name: pages
+  schema: public
+remote_relationships:
+- definition:
+    hasura_fields:
+    - code
+    remote_field:
+      page_sections:
+        arguments:
+          page_code: $code
+    remote_schema: sample
+  name: test
