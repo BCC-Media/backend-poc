@@ -1,0 +1,22 @@
+table:
+  name: media_media_rel_flat
+  schema: public
+object_relationships:
+- name: child
+  using:
+    manual_configuration:
+      column_mapping:
+        child_id: id
+      insertion_order: null
+      remote_table:
+        name: media
+        schema: public
+- name: parent
+  using:
+    manual_configuration:
+      column_mapping:
+        parent_id: id
+      insertion_order: null
+      remote_table:
+        name: media
+        schema: public

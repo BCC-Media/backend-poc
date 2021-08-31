@@ -6,6 +6,7 @@
 - "!include public_logics.yaml"
 - "!include public_media.yaml"
 - "!include public_media_media_rel.yaml"
+- "!include public_media_media_rel_flat.yaml"
 - "!include public_media_t.yaml"
 - "!include public_pages.yaml"
 - "!include public_queries.yaml"

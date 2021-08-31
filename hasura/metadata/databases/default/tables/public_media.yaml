@@ -23,6 +23,15 @@ array_relationships:
       table:
         name: category_media
         schema: public
+- name: children
+  using:
+    manual_configuration:
+      column_mapping:
+        id: parent_id
+      insertion_order: null
+      remote_table:
+        name: media_media_rel_flat
+        schema: public
 - name: translated_fields
   using:
     foreign_key_constraint_on:

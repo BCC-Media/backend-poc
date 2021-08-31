@@ -1,0 +1,1 @@
+DROP VIEW "public"."media_media_rel_flat";
