@@ -3,7 +3,6 @@
 - "!include public_category_t.yaml"
 - "!include public_filters.yaml"
 - "!include public_languages.yaml"
-- "!include public_logics.yaml"
 - "!include public_media.yaml"
 - "!include public_media_media_rel.yaml"
 - "!include public_media_media_rel_flat.yaml"
