@@ -1,124 +1,124 @@
 interface Page{
-	id: ID!
-	title: String
-	description: String
-	localizations: [LocalizedPage!]!
-	sections(
-		first: Int!
-		after: Cursor
-	): SectionConnection!
+  id: ID!
+  title: String
+  description: String
+  localizations: [LocalizedPage!]!
+  sections(
+    first: Int!
+    after: Cursor
+  ): SectionConnection!
 }
 
 type ShowPage implements Page{
-	id: ID!
-	title: String
-	description: String
-	localizations: [LocalizedPage!]!
-	sections(
-		first: Int!
-		after: Cursor
-	): SectionConnection!
-    show: Show
+  id: ID!
+  title: String
+  description: String
+  localizations: [LocalizedPage!]!
+  sections(
+    first: Int!
+    after: Cursor
+  ): SectionConnection!
+  show: Show
 }
 
 type ProgramPage implements Page{
-	id: ID!
-	title: String
-	description: String
-	localizations: [LocalizedPage!]!
-	sections(
-		first: Int!
-		after: Cursor
-	): SectionConnection!
-    program: Program
+  id: ID!
+  title: String
+  description: String
+  localizations: [LocalizedPage!]!
+  sections(
+    first: Int!
+    after: Cursor
+  ): SectionConnection!
+  program: Program
 }
 
 type Show {
-	id: ID!
-    title: String!
-    episodeCount: Int!
-    seasonCount: Int!
+  id: ID!
+  title: String!
+  episodeCount: Int!
+  seasonCount: Int!
 }
 
 type PaginationInfo{
-	id: ID!
-	endCursor: Cursor!
-	hasNextPage: Boolean!
+  id: ID!
+  endCursor: Cursor!
+  hasNextPage: Boolean!
 }
 
 type SectionConnection{
-	id: ID!
-	edges: [SectionEdge!]!
-	pageInfo: PaginationInfo!
-	cursor: Cursor!
+  id: ID!
+  edges: [SectionEdge!]!
+  pageInfo: PaginationInfo!
+  cursor: Cursor!
 }
 
 type SectionEdge{
-	id: ID!
-	node: Section!
+  id: ID!
+  node: Section!
 }
 
 type LocalizedPage{
-	id: ID!
-	language: Language!
-	title: String
-	description: String
+  id: ID!
+  language: Language!
+  title: String
+  description: String
 }
 
 enum Language{
-	en
-	no
-	de
+  en
+  no
+  de
 }
 
 interface Section{
-	id: ID!
-	localizations: [LocalizedSection!]!
-	title: String
+  id: ID!
+  localizations: [LocalizedSection!]!
+  title: String
 }
 
 type LocalizedSection{
-	id: ID!
-	language: Language!
-	title: String
+  id: ID!
+  language: Language!
+  title: String
 }
 
 type BCCOSection implements Section{
-	id: ID!
-	localizations: [LocalizedSection!]!
-	title: String
-	bannerURL: String!
+  id: ID!
+  localizations: [LocalizedSection!]!
+  title: String
+  bannerURL: String!
 }
 
 type ItemSection implements Section {
-	id: ID!
-	localizations: [LocalizedSection!]!
-	title: String
-	implementation: ItemSectionImplementation
-    pageId: ID!
+  id: ID!
+  localizations: [LocalizedSection!]!
+  title: String
+  implementation: ItemSectionImplementation
+  pageId: ID!
 }
 
 interface ItemSectionImplementation {
-	id: ID!
-	items: [Item!]!
+  id: ID!
+  items: [Item!]!
 }
 
 type ContainerSection implements Section{
-	id: ID!
-	localizations: [LocalizedSection!]!
-	title: String
-	sections: [Section!]!
+  id: ID!
+  localizations: [LocalizedSection!]!
+  title: String
+  sections: [Section!]!
 }
 
 type SliderItemsSection implements ItemSectionImplementation{
-	id: ID!
-	items: [Item!]!
+  id: ID!
+  items: [Item!]!
 }
 
 type BubblesItemsSection implements ItemSectionImplementation{
-	id: ID!
-	items: [Item!]!
-	borderColor: String
+  id: ID!
+  items: [Item!]!
+  borderColor: String
 }
 
 scalar Cursor
@@ -196,7 +196,7 @@ type Standalone implements Program {
 }
 
 schema{
-	query: QueryRoot
+  query: QueryRoot
 }
 
 type CalendarPeriod {
@@ -248,28 +248,19 @@ type FAQCategory {
 }
 
 type QueryRoot{
-	page(
-		id: ID!
-	): Page
+  page(
+    id: ID!
+  ): Page
 
-    program(
-      id: ID!
-    ): Program
+  program(
+    id: ID!
+  ): Program
 
-    section(
-      id: ID!
-    ): Section
+  section(
+    id: ID!
+  ): Section
 
-    calendar: Calendar
-    event(id: ID!): Event
-    allFAQs: [FAQCategory!]!
+  calendar: Calendar
+  event(id: ID!): Event
+  allFAQs: [FAQCategory!]!
 }
-
-
-
-
-
-
-
-
-
