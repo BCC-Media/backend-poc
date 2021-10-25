@@ -11,12 +11,14 @@ import {
     FormWithRedirect,
     Loading,
     Error,
-    CreateButton
+    CreateButton,
+    useCreate
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
 function MediaTranslationEdit({ onChange }) {
     const [update, { }] = useUpdate('media_t');
+    const [create, { }] = useCreate('media_t');
     const notify = useNotify();
     const form = useForm();
     var parentFormValues = form.getState().values;
@@ -39,24 +41,44 @@ function MediaTranslationEdit({ onChange }) {
     else if (initialLoad.error) return <Error error={initialLoad.error} />;
 
     const handleSubmit = async values => {
-        update(
-            { payload: { id: initialLoad.data[0].id, data: values } },
-            {
-                onSuccess: ({ data }) => {
-                    console.log(data)
-                    onChange();
-                },
-                onFailure: ({ error }) => {
-                    notify(error.message, 'error');
+        if (initialLoad.data?.[0] != null) {
+            update(
+                { payload: { data: values } },
+                {
+                    onSuccess: ({ data }) => {
+                        console.log(data)
+                        onChange();
+                    },
+                    onFailure: ({ error }) => {
+                        notify(error.message, 'error');
+                    }
                 }
-            }
-        );
+            );
+        } else {
+            create(
+                { payload: { data: values } },
+                {
+                    onSuccess: ({ data }) => {
+                        console.log(data)
+                        onChange();
+                    },
+                    onFailure: ({ error }) => {
+                        notify(error.message, 'error');
+                    }
+                }
+            )
+        }
+    };
+
+    const initialValues = initialLoad.data?.[0] || {
+        language_id: 1,
+        media_id: parentFormValues.id
     };
 
     return (
         <>
             <FormWithRedirect
-                initialValues={initialLoad.data[0]}
+                initialValues={initialValues}
                 resource="media_t"
                 save={handleSubmit}
                 render={({

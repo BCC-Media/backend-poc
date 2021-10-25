@@ -11,12 +11,14 @@ import {
     FormWithRedirect,
     Loading,
     Error,
-    CreateButton
+    CreateButton,
+    useCreate
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
 
 export const CategoryTranslationEdit = ({ onChange }) => {
     const [update, { }] = useUpdate('category_t');
+    const [create, { }] = useCreate('category_t');
     const notify = useNotify();
     const form = useForm();
     var parentFormValues = form.getState().values;
@@ -33,18 +35,33 @@ export const CategoryTranslationEdit = ({ onChange }) => {
     else if (initialLoad.error) return <Error error={initialLoad.error} />;
 
     const handleSubmit = async values => {
-        update(
-            { payload: { data: values } },
-            {
-                onSuccess: ({ data }) => {
-                    console.log(data)
-                    onChange();
-                },
-                onFailure: ({ error }) => {
-                    notify(error.message, 'error');
+        if (initialLoad.data?.[0] != null) {
+            update(
+                { payload: { data: values } },
+                {
+                    onSuccess: ({ data }) => {
+                        console.log(data)
+                        onChange();
+                    },
+                    onFailure: ({ error }) => {
+                        notify(error.message, 'error');
+                    }
                 }
-            }
-        );
+            );
+        } else {
+            create(
+                { payload: { data: values } },
+                {
+                    onSuccess: ({ data }) => {
+                        console.log(data)
+                        onChange();
+                    },
+                    onFailure: ({ error }) => {
+                        notify(error.message, 'error');
+                    }
+                }
+            )
+        }
     };
 
     return (
